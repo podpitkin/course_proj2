@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Aircraft:
-    """Класс для представления информации о самолете"""
+    """ Класс для представления информации о самолете """
 
     __slots__ = ('origin_country', 'callsign', 'velocity', 'altitude')
     origin_country: str  # Страна регистрации
@@ -15,7 +15,7 @@ class Aircraft:
         self._validate_data()
 
     def _validate_data(self):
-        """Валидация данных самолета"""
+        """ Валидация данных самолета """
         if not isinstance(self.origin_country, str) or not self.origin_country.strip():
             raise ValueError("Страна регистрации должна быть непустой строкой")
 
@@ -39,7 +39,7 @@ class Aircraft:
         return self.velocity == other.velocity and self.altitude == other.altitude
 
     def __lt__(self, other):
-        """Сравнение самолетов по скорости и высоте (меньше)"""
+        """ Сравнение самолетов по скорости и высоте (меньше) """
         if not isinstance(other, Aircraft):
             return NotImplemented
 
@@ -49,7 +49,7 @@ class Aircraft:
         return self.altitude < other.altitude
 
     def __le__(self, other):
-        """Сравнение самолетов по скорости и высоте (меньше или равно)"""
+        """ Сравнение самолетов по скорости и высоте (меньше или равно) """
         if not isinstance(other, Aircraft):
             return NotImplemented
         return self < other or self == other
@@ -61,7 +61,7 @@ class Aircraft:
         return not self <= other
 
     def __ge__(self, other):
-        """Сравнение самолетов по скорости и высоте"""
+        """Сравнение самолетов по скорости и высоте """
         if not isinstance(other, Aircraft):
             return NotImplemented
         return not self < other
@@ -83,7 +83,7 @@ class Aircraft:
         )
 
     def to_dict(self):
-        """Преобразование в словарь"""
+        """ Преобразование в словарь """
         return {
             'origin_country': self.origin_country,
             'callsign': self.callsign,

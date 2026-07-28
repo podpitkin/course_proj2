@@ -8,27 +8,27 @@ class Storage(abc.ABC):
 
     @abc.abstractmethod
     def add_aircraft(self, aircraft: Aircraft):
-        """Добавление информации о самолете в хранилище"""
+        """ Добавление информации о самолете в хранилище """
         pass
 
     @abc.abstractmethod
     def get_aircraft_by_country(self, country):
-        """Получение самолетов по стране регистрации"""
+        """ Получение самолетов по стране регистрации """
         pass
 
     @abc.abstractmethod
     def get_top_aircraft_by_altitude(self, n):
-        """Получение топ N самолетов по высоте полета"""
+        """ Получение топ N самолетов по высоте полета """
         pass
 
     @abc.abstractmethod
     def delete_aircraft_by_callsign(self, callsign):
-        """Удаление информации о самолете по позывному"""
+        """ Удаление информации о самолете по позывному """
         pass
 
 
 class JSONStorage(Storage):
-    """Класс для сохранения информации о самолетах в JSON-файл"""
+    """ Класс для сохранения информации о самолетах в JSON-файл """
 
     def __init__(self, file_path: str = "data/aircraft_data.json"):
         self.file_path = Path(file_path)
@@ -36,13 +36,13 @@ class JSONStorage(Storage):
         self._ensure_file_exists()
 
     def _ensure_file_exists(self):
-        """Создание файла, если он не существует"""
+        """Создание файла, если он не существует """
         if not self.file_path.exists():
             with open(self.file_path, 'w', encoding='utf-8') as f:
                 json.dump([], f)
 
     def _read_data(self):
-        """Чтение данных из файла"""
+        """ Чтение данных из файла """
         try:
             with open(self.file_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
@@ -50,12 +50,12 @@ class JSONStorage(Storage):
             return []
 
     def _write_data(self, data):
-        """Запись данных в файл."""
+        """Запись данных в файл """
         with open(self.file_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
     def add_aircraft(self, aircraft: Aircraft):
-        """Добавление информации о самолете в JSON-файл"""
+        """ Добавление информации о самолете в JSON-файл """
         try:
             data = self._read_data()
             aircraft_dict = aircraft.to_dict()
@@ -67,7 +67,7 @@ class JSONStorage(Storage):
             return False
 
     def get_aircraft_by_country(self, country):
-        """Получение самолетов по стране регистрации"""
+        """ Получение самолетов по стране регистрации """
         try:
             data = self._read_data()
             aircraft_list = []
@@ -82,7 +82,7 @@ class JSONStorage(Storage):
             return []
 
     def get_top_aircraft_by_altitude(self, n):
-        """Получение топ N самолетов по высоте полет."""
+        """ Получение топ N самолетов по высоте полет """
         try:
             data = self._read_data()
             aircraft_list = [Aircraft.from_dict(item) for item in data]
@@ -95,7 +95,7 @@ class JSONStorage(Storage):
             return []
 
     def delete_aircraft_by_callsign(self, callsign):
-        """Удаление информации о самолете по позывному"""
+        """ Удаление информации о самолете по позывному """
         try:
             data = self._read_data()
             initial_length = len(data)
